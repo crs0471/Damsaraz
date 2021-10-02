@@ -1,0 +1,161 @@
+WindowManager:
+	MainWindow:
+	GameWindow:
+	RuleWindow:
+	ScoreWindow:
+
+<MainWindow>:
+	username:username
+	name:"mainwindow"
+	FloatLayout:
+		Label:
+			text:"..Welcome To Damsaraz.."
+			size_hint:(0.5,0.5)
+			pos_hint:{"x":0.25,"top":1}
+			font_size:40
+			color:1,0,0,1
+		Label:
+			text:"BY @CrsDEVLOP"
+			pos_hint:{"x":0.0,"top":0.7}
+		Label:
+			text:"User Name : "
+			size_hint:(0.5,0.5)
+			pos_hint:{"x":0.1,"top":0.8}
+			font_size:25
+			color:1,0,0,1
+
+		TextInput:
+			id:username
+			focaus:True
+			multiline:False
+			size_hint: (0.3,0.06)
+			pos_hint:{"x":0.45,"top":0.58}
+			font_size:22
+
+		Button:
+			id:btnplay
+			text:"Play"
+			size_hint:(0.1,0.08)
+			pos_hint:{"x":0.25,"top":0.4}
+			disabled: True if username.text == "" else False
+			on_press: root.add_user()
+			on_release:
+				root.manager.current = "gamewindow"
+		Button:
+			id:btnrule
+			text:"Rules"
+			size_hint:(0.1,0.08)
+			pos_hint:{"x":0.45,"top":0.4}
+			on_release:
+				root.manager.current = "rulewindow"
+		Button:
+			id:scores
+			text:"scores"
+			size_hint:(0.1,0.08)
+			pos_hint:{"x":0.65,"top":0.4}
+			on_release:
+				root.manager.current = "scorewindow"
+
+		
+
+<GameWindow>:
+	name:"gamewindow"
+	userinput:userinput
+	chatarea:chatarea
+	score:score
+	Label:
+		text:"this is game window"
+		font_size:25
+		pos_hint:{"x":0.0,"top":1.4}
+	TextInput:
+		multiline:True
+		id:chatarea
+		text:"Let's start...\nYou have to start from alphabate 'A' : ....\n\n"
+		background_color: 1,1,1,0.8
+		foreground_color: 1,0,0,0.8
+		size_hint: (0.5,0.6)
+		pos_hint: {"x":0.25,"top":0.8}
+	Label:
+		text:"your score is : "
+		pos_hint:{"x":0.1,"top":1.32}
+		font_size:18
+	Label:
+		id:score
+		text:"0"
+		pos_hint:{"x":0.2,"top":1.32}
+		font_size:18
+	TextInput:
+		id:userinput
+		multiline:False
+		text_hint:"enter a movi name : "
+		background_color: 1,1,1,0.8
+		foreground_color: 0,0,1,0.8
+		size_hint: (0.4,0.05)
+		pos_hint: {"x":0.25,"top":0.2}
+	Button:
+		text:"Send"
+		pos_hint:{"x":0.65,"top":0.2}
+		size_hint: (0.1,0.05)
+		disabled : True if userinput.text=="" else False
+		on_press : root.sendclk()
+	Button:
+		text:"EXIT"
+		pos_hint:{"x":0.5,"top":0.1}
+		size_hint: (0.1,0.05)
+		disabled : False
+		on_press : root.exit()
+
+
+<RuleWindow>:
+	name:"rulewindow"
+	
+	Label:
+		text:":RULES:"
+		font_size:50
+		pos_hint:{"x":0.0,"top":1.3}
+
+	TextInput:
+		text:"first off all.. let me tell you the rules.....\nwe will write the hindi movie name one by one.\n*if you hit enter key without enter the movie name \nmeans you gave up.\n*if you enter wrong movie then you will lose this game\n*don't use space instant use '_' for multiword movie name.\n\n**and here we go start from the alphabed 'A':\n"
+		id:txt_rule
+		multiline:True
+		font_size:18
+		size_hint:(0.5,0.5)
+		pos_hint:{"x":0.25,"top":0.7}
+		disabled : True
+
+	Button:
+		text:"back to MainWindow"
+		size_hint:(0.15,0.1)
+		pos_hint:{"x":0.4,"top":0.15}
+		on_release:
+			root.manager.current="mainwindow"
+
+<ScoreWindow>:
+	name:"scorewindow"
+	labsc:labsc
+	GridLayout:
+		cols:1
+		GridLayout:
+			cols:2
+			size_hint_y:None
+			height:50
+			Button:
+				text:"show"
+				pos_hint:{"x":0,"top":1}
+				size_hint:(0.1,0.1)
+				on_press:root.press()
+			Button:
+				text:"back to MainWindow"
+				pos_hint:{"x":0,"top":1}
+				size_hint:(0.1,0.1)
+				on_release:
+					root.manager.current = "mainwindow"
+		ScrollView:
+			background_color:1,0,0,1
+			Label:
+				id:labsc
+				text : ""
+				font_size : 30 
+				text_size : self.width , None
+				size_hint_y : None
+				height: self.texture_size[1]
